@@ -24,9 +24,9 @@ export default function Login() {
     setIsLoading(true);
 
     setTimeout(() => {
-      let users = localStorage.getItem('users'); console.log({ users });
+      let users = localStorage.getItem('users');
       if (users) {
-        users = JSON.parse(users); console.log({ users });
+        users = JSON.parse(users);
         const existsCurrentUser = users.find((user) => {
           const {
             email: storedEmail,

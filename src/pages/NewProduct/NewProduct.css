@@ -1,9 +1,9 @@
 @media all and (min-width: 480px) {
-  .NewClient form {
+  .NewProduct form {
     margin: 0 auto;
   }
 
-  .NewClient .legend {
+  .NewProduct .legend {
     display: flex;
     justify-content: center;
     font-size: 1.6em;

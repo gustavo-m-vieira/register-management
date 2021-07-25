@@ -6,6 +6,7 @@ import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
 import "./Signup.css";
+import { handleReset } from "../../libs/handleResetLib";
 
 export default function Signup() {
   const [fields, handleFieldChange] = useFormFields({
@@ -47,7 +48,7 @@ export default function Signup() {
         if (existsCurrentUser) {
           onError('Exists Current User');
           setIsLoading(false);
-          // limpar fields aqui
+          handleReset();
         } else {
           // I know this is super insecure, but not using externals services its the best I can think
           users.push({ email: fields.email, password: fields.password });
