@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import "./Login.css";
 import { useAppContext } from "../../libs/contextLib";
 import LoaderButton from "../../components/LoaderButton";
+import { onError } from "../../libs/errorLib";
 
 export default function Login() {
   const history = useHistory();
@@ -23,9 +24,31 @@ export default function Login() {
     setIsLoading(true);
 
     setTimeout(() => {
-      userHasAuthenticated(true);
-      localStorage.setItem('userIsAuthenticated', 'authenticated');
-      history.push("/");
+      let users = localStorage.getItem('users'); console.log({ users });
+      if (users) {
+        users = JSON.parse(users); console.log({ users });
+        const existsCurrentUser = users.find((user) => {
+          const {
+            email: storedEmail,
+            password: storedPassword,
+          } = user || {};
+
+          if (storedEmail === email && storedPassword === password) return true;
+          return false;
+        });
+
+        if (existsCurrentUser) {
+          userHasAuthenticated(true);
+          localStorage.setItem('userIsAuthenticated', 'authenticated');
+          history.push("/");
+        } else {
+          onError('Unexistent User');
+          history.push("/signup");
+        }
+      } else {
+        onError('Unexistent User');
+        history.push("/signup");
+      }
     }, 3000);
   }
 
