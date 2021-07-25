@@ -1,10 +1,27 @@
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import "./App.css";
 import Routes from "../../Routes";
+import { AppContext } from "../../libs/contextLib";
 
 function App() {
+  const history = useHistory();
+  const [isAuthenticated, userHasAuthenticated] = useState(false);
+
+  function handleLogout() {
+    userHasAuthenticated(false);
+    localStorage.setItem('userIsAuthenticated', 'unauthenticated');
+    history.push("/login");
+  }
+
+  useEffect(() => {
+    const userIsAuthenticated = localStorage.getItem('userIsAuthenticated');
+    userHasAuthenticated(userIsAuthenticated === 'authenticated');
+  }, []);
+
   return (
     <div className="App container py-3">
       <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
@@ -16,16 +33,26 @@ function App() {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Nav activeKey={window.location.pathname}>
-            <LinkContainer to="/signup">
-              <Nav.Link>Signup</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/login">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
+          {
+            isAuthenticated ? (
+              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+            ) : (
+              <>
+                <LinkContainer to="/signup">
+                  <Nav.Link>Signup</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+              </>
+            )
+          }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes />
+      <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+        <Routes />
+      </AppContext.Provider>
     </div>
   );
 }
