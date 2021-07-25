@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import NewClient from "./pages/NewClient";
 
 export default function Routes() {
   return (
@@ -19,6 +20,9 @@ export default function Routes() {
       <Route exact path="/signup">
         <Signup />
       </Route>
+      <Route exact path="/clients/new">
+      <NewClient />
+    </Route>
       <Route>
         <NotFound />
       </Route>

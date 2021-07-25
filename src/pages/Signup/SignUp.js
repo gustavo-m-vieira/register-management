@@ -59,8 +59,6 @@ export default function Signup() {
         createdNewUser(users);
       }
     }, 3000);
-
-    setIsLoading(false);
   }
 
   function renderForm() {

@@ -1,0 +1,9 @@
+@media all and (min-width: 480px) {
+  .NewClient {
+    padding: 60px 0;
+  }
+
+  .NewClient form {
+    margin: 0 auto;
+  }
+}
