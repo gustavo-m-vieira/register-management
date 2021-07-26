@@ -78,6 +78,14 @@ export default function Client() {
   async function handleDelete(event) {
     event.preventDefault();
 
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this client?"
+    );
+  
+    if (!confirmed) {
+      return;
+    }
+
     setIsDeleting(true);
     setTimeout(() => {
       let clients = localStorage.getItem('clients');

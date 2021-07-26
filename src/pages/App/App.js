@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Nav } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { useHistory } from "react-router-dom";
-
 import Routes from "../../Routes";
 import { AppContext } from "../../libs/contextLib";
+import Navbar from "../Navbar";
 
 function App() {
-  const history = useHistory();
   const [isAuthenticated, userHasAuthenticated] = useState(false);
-
-  function handleLogout() {
-    userHasAuthenticated(false);
-    localStorage.setItem('userIsAuthenticated', 'unauthenticated');
-    history.push("/login");
-  }
 
   useEffect(() => {
     const userIsAuthenticated = localStorage.getItem('userIsAuthenticated');
@@ -23,41 +13,8 @@ function App() {
 
   return (
     <div className="App container py-3">
-      <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
-        <LinkContainer to="/">
-          <Navbar.Brand className="font-weight-bold text-muted">
-            Register Management
-          </Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
-          <Nav activeKey={window.location.pathname}>
-          {
-            isAuthenticated ? (
-              <>
-                <LinkContainer to="/products/new">
-                  <Nav.Link>New Product</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/clients">
-                  <Nav.Link>Client</Nav.Link>
-                </LinkContainer>
-                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
-              </>
-            ) : (
-              <>
-                <LinkContainer to="/signup">
-                  <Nav.Link>Signup</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
-                </LinkContainer>
-              </>
-            )
-          }
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
       <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+        <Navbar />
         <Routes />
       </AppContext.Provider>
     </div>

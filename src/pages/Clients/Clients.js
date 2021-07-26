@@ -3,8 +3,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { BsPencilSquare } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
 
-// import { onError } from "../../libs/errorLib";
-
 import './Clients.css';
 
 export default function Clients() {

@@ -12,6 +12,8 @@ import NewClient from "./pages/NewClient";
 import NewProduct from "./pages/NewProduct";
 import Clients from "./pages/Clients";
 import Client from "./pages/Client";
+import Products from "./pages/Products";
+import Product from "./pages/Product";
 
 export default function Routes() {
   const { isAuthenticated } = useAppContext();
@@ -38,6 +40,12 @@ export default function Routes() {
       </Route>
       <Route exact path="/clients/:email">
       {isAuthenticated ? <Client /> : <NotFound />}
+      </Route>
+      <Route exact path="/products">
+      {isAuthenticated ? <Products /> : <NotFound />}
+      </Route>
+      <Route exact path="/products/:name">
+      {isAuthenticated ? <Product /> : <NotFound />}
       </Route>
       <Route>
         <NotFound />
