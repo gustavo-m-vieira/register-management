@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { onError } from "../../libs/errorLib";
+import { SpinnerRoundOutlined } from 'spinners-react';
 import Form from "react-bootstrap/Form";
+
+import { onError } from "../../libs/errorLib";
 import LoaderButton from "../../components/LoaderButton";
 import { useFormFields } from "../../libs/hooksLib";
+import './Client.css';
 
 export default function Client() {
   const { email } = useParams();
@@ -111,63 +114,67 @@ export default function Client() {
     }, 3000);
   }
 
-  function renderClient() {
-    return (
-      <Form onSubmit={handleSubmit}>
-        <legend className="legend font-weight-bold text-muted active navbar-brand">Edit Client</legend>
-        <Form.Group controlId="name" size="lg">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            autoFocus
-            type="text"
-            value={fields.name}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="email" size="lg">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={fields.email}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="address" size="lg">
-          <Form.Label>Address</Form.Label>
-          <Form.Control
-            autoFocus
-            type="text"
-            value={fields.address}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <LoaderButton
-          block
-          size="lg"
-          type="submit"
-          isLoading={isUpdating}
-          disabled={!validateForm() || isDeleting}
-        >
-          Save
-        </LoaderButton>
-        <LoaderButton
-          block
-          size="lg"
-          variant="danger"
-          onClick={handleDelete}
-          isLoading={isDeleting}
-          disabled={!validateForm() || isUpdating}
-        >
-          Delete
-        </LoaderButton>
-      </Form>
-    )
-  }
-
   return (
     <div className="Client">
-      {!isLoading && renderClient()}
+      <Form onSubmit={handleSubmit}>
+        <legend className="legend font-weight-bold text-muted active navbar-brand">Edit Client</legend>
+        {
+          isLoading || !fields.name ? 
+          <div className="py-3 text-nowrap text-truncate loading-spinner">
+            <SpinnerRoundOutlined color="black" size="20vh" secondaryColor="gray"/>
+          </div>
+          :
+          <>
+            <Form.Group controlId="name" size="lg">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                autoFocus
+                type="text"
+                value={fields.name}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="email" size="lg">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                autoFocus
+                type="email"
+                value={fields.email}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="address" size="lg">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                autoFocus
+                type="text"
+                value={fields.address}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <LoaderButton
+              block
+              size="lg"
+              type="submit"
+              variant="dark"
+              isLoading={isUpdating}
+              disabled={!validateForm() || isDeleting}
+            >
+              Save
+            </LoaderButton>
+            <LoaderButton
+              block
+              size="lg"
+              variant="danger"
+              onClick={handleDelete}
+              isLoading={isDeleting}
+              disabled={!validateForm() || isUpdating}
+            >
+              Delete
+            </LoaderButton>
+        </>
+      }
+      </Form>
     </div>
   );
 }

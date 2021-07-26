@@ -6,6 +6,7 @@ import { useAppContext } from "./libs/contextLib";
 // PAGES
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import NotAuthorized from "./pages/NotAuthorized";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NewClient from "./pages/NewClient";
@@ -30,22 +31,22 @@ export default function Routes() {
         <Signup />
       </Route>
       <Route exact path="/clients/new">
-        {isAuthenticated ? <NewClient /> : <NotFound />}
+        {isAuthenticated ? <NewClient /> : <NotAuthorized />}
       </Route>
       <Route exact path="/products/new">
-      {isAuthenticated ? <NewProduct /> : <NotFound />}
+      {isAuthenticated ? <NewProduct /> : <NotAuthorized />}
       </Route>
       <Route exact path="/clients">
-      {isAuthenticated ? <Clients /> : <NotFound />}
+      {isAuthenticated ? <Clients /> : <NotAuthorized />}
       </Route>
       <Route exact path="/clients/:email">
-      {isAuthenticated ? <Client /> : <NotFound />}
+      {isAuthenticated ? <Client /> : <NotAuthorized />}
       </Route>
       <Route exact path="/products">
-      {isAuthenticated ? <Products /> : <NotFound />}
+      {isAuthenticated ? <Products /> : <NotAuthorized />}
       </Route>
       <Route exact path="/products/:name">
-      {isAuthenticated ? <Product /> : <NotFound />}
+      {isAuthenticated ? <Product /> : <NotAuthorized />}
       </Route>
       <Route>
         <NotFound />

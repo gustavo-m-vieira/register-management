@@ -76,6 +76,7 @@ export default function Login() {
           block
           size="lg"
           type="submit"
+          variant="dark"
           isLoading={isLoading}
           disabled={!validateForm()}
         >

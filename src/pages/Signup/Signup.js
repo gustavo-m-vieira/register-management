@@ -94,7 +94,7 @@ export default function Signup() {
           block
           size="lg"
           type="submit"
-          variant="success"
+          variant="dark"
           isLoading={isLoading}
           disabled={!validateForm()}
         >

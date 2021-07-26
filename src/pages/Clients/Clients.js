@@ -1,7 +1,8 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { BsPencilSquare } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
+import { SpinnerDiamond } from 'spinners-react';
 
 import './Clients.css';
 
@@ -16,7 +17,6 @@ export default function Clients() {
         if (clients) clients = JSON.parse(clients);
         setClients(clients);
       }, 3000);
-
       setIsLoading(false);
     }
     onLoad();
@@ -43,9 +43,10 @@ export default function Clients() {
     );
   }
 
-  function renderClientsList(clients) {
-    return (
-      <Fragment>
+  return (
+    <div className="Clients">
+      <h2 className="pb-3 mt-4 mb-3 border-bottom">Clients</h2>
+      <ListGroup>
         <LinkContainer to="/clients/new">
           <ListGroup.Item action className="py-3 text-nowrap text-truncate">
             <BsPencilSquare size={17} />
@@ -53,16 +54,14 @@ export default function Clients() {
           </ListGroup.Item>
         </LinkContainer>
         {
+          isLoading || !clients || !clients.length ?
+          <ListGroup.Item className="py-3 text-nowrap text-truncate loading-spinner">
+            <SpinnerDiamond color="black" secondaryColor="gray"/>
+          </ListGroup.Item>
+          :
           clients.map((client) => renderClient(client))
         }
-      </Fragment>
-    );
-  }
-
-  return (
-    <div className="Clients">
-      <h2 className="pb-3 mt-4 mb-3 border-bottom">Clients</h2>
-      <ListGroup>{!isLoading && renderClientsList(clients)}</ListGroup>
+      </ListGroup>
     </div>
   );
 }

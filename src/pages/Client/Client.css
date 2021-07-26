@@ -1,0 +1,6 @@
+.Client .loading-spinner {
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  opacity: 30%;
+}

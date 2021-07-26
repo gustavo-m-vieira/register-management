@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { onError } from "../../libs/errorLib";
+import { SpinnerRoundOutlined } from 'spinners-react';
 import Form from "react-bootstrap/Form";
+
+import { onError } from "../../libs/errorLib";
 import LoaderButton from "../../components/LoaderButton";
 import { useFormFields } from "../../libs/hooksLib";
+import './Product.css';
 
 export default function Product() {
   const { name } = useParams();
@@ -113,72 +116,76 @@ export default function Product() {
     }, 3000);
   }
 
-  function renderProduct() {
-    return (
-      <Form onSubmit={handleSubmit}>
-        <legend className="legend font-weight-bold text-muted active navbar-brand">Edit Product</legend>
-        <Form.Group controlId="name" size="lg">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            autoFocus
-            type="text"
-            value={fields.name}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="description" size="lg">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            autoFocus
-            type="text"
-            value={fields.description}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="amount" size="lg">
-          <Form.Label>Amount Available</Form.Label>
-          <Form.Control
-            autoFocus
-            type="number"
-            value={fields.amount}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="price" size="lg">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            autoFocus
-            type="number"
-            value={fields.price}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <LoaderButton
-          block
-          size="lg"
-          type="submit"
-          isLoading={isUpdating}
-          disabled={!validateForm() || isDeleting}
-        >
-          Save
-        </LoaderButton>
-        <LoaderButton
-          block
-          size="lg"
-          variant="danger"
-          onClick={handleDelete}
-          isLoading={isDeleting}
-          disabled={!validateForm() || isUpdating}
-        >
-          Delete
-        </LoaderButton>
-      </Form>
-    )
-  }
-
   return (
     <div className="Product">
-      {!isLoading && renderProduct()}
+      <Form onSubmit={handleSubmit}>
+        <legend className="legend font-weight-bold text-muted active navbar-brand">Edit Product</legend>
+        {
+          isLoading || !fields.name ? 
+          <div className="py-3 text-nowrap text-truncate loading-spinner">
+            <SpinnerRoundOutlined color="black" size="20vh" secondaryColor="gray"/>
+          </div>
+          :
+          <>
+            <Form.Group controlId="name" size="lg">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                autoFocus
+                type="text"
+                value={fields.name}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="description" size="lg">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                autoFocus
+                type="text"
+                value={fields.description}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="amount" size="lg">
+              <Form.Label>Amount Available</Form.Label>
+              <Form.Control
+                autoFocus
+                type="number"
+                value={fields.amount}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="price" size="lg">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                autoFocus
+                type="number"
+                value={fields.price}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <LoaderButton
+              block
+              size="lg"
+              type="submit"
+              variant="dark"
+              isLoading={isUpdating}
+              disabled={!validateForm() || isDeleting}
+            >
+              Save
+            </LoaderButton>
+            <LoaderButton
+              block
+              size="lg"
+              variant="danger"
+              onClick={handleDelete}
+              isLoading={isDeleting}
+              disabled={!validateForm() || isUpdating}
+            >
+              Delete
+            </LoaderButton>
+          </>
+        }
+      </Form>
     </div>
   );
 }

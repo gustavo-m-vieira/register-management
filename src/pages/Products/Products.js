@@ -1,7 +1,8 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { BsPencilSquare } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
+import { SpinnerDiamond } from 'spinners-react';
 
 import './Products.css';
 
@@ -40,9 +41,10 @@ export default function Products() {
     );
   }
 
-  function renderProductsList(products) {
-    return (
-      <Fragment>
+  return (
+    <div className="Products">
+      <h2 className="pb-3 mt-4 mb-3 border-bottom">Products</h2>
+      <ListGroup>
         <LinkContainer to="/products/new">
           <ListGroup.Item action className="py-3 text-nowrap text-truncate">
             <BsPencilSquare size={17} />
@@ -50,16 +52,14 @@ export default function Products() {
           </ListGroup.Item>
         </LinkContainer>
         {
+          isLoading || !products || !products.length ?
+          <ListGroup.Item className="py-3 text-nowrap text-truncate loading-spinner">
+            <SpinnerDiamond color="black" secondaryColor="gray"/>
+          </ListGroup.Item>
+          :
           products.map((product) => renderProduct(product))
         }
-      </Fragment>
-    );
-  }
-
-  return (
-    <div className="Products">
-      <h2 className="pb-3 mt-4 mb-3 border-bottom">Products</h2>
-      <ListGroup>{!isLoading && renderProductsList(products)}</ListGroup>
+      </ListGroup>
     </div>
   );
 }
