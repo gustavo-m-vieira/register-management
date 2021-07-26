@@ -3,7 +3,6 @@ import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useHistory } from "react-router-dom";
 
-import "./App.css";
 import Routes from "../../Routes";
 import { AppContext } from "../../libs/contextLib";
 
@@ -35,7 +34,15 @@ function App() {
           <Nav activeKey={window.location.pathname}>
           {
             isAuthenticated ? (
-              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+              <>
+                <LinkContainer to="/products/new">
+                  <Nav.Link>New Product</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/clients">
+                  <Nav.Link>Client</Nav.Link>
+                </LinkContainer>
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+              </>
             ) : (
               <>
                 <LinkContainer to="/signup">

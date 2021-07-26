@@ -23,6 +23,7 @@ export default function NewClient() {
   function createdNewClient(clients) {
     localStorage.setItem('clients', JSON.stringify(clients));
 
+    setIsLoading(false);
     alert('Created Client!');
     history.push("/clients");
   }
