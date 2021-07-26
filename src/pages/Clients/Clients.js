@@ -7,7 +7,7 @@ import { SpinnerDiamond } from 'spinners-react';
 import './Clients.css';
 
 export default function Clients() {
-  const [clients, setClients] = useState([]);
+  const [clients, setClients] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Clients() {
       setTimeout(() => {
         let clients = localStorage.getItem('clients');
         if (clients) clients = JSON.parse(clients);
-        setClients(clients);
+        setClients(clients || []);
       }, 3000);
       setIsLoading(false);
     }
@@ -54,7 +54,7 @@ export default function Clients() {
           </ListGroup.Item>
         </LinkContainer>
         {
-          isLoading || !clients || !clients.length ?
+          isLoading || !clients ?
           <ListGroup.Item className="py-3 text-nowrap text-truncate loading-spinner">
             <SpinnerDiamond color="black" secondaryColor="gray"/>
           </ListGroup.Item>

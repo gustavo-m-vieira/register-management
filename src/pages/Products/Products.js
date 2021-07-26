@@ -7,7 +7,7 @@ import { SpinnerDiamond } from 'spinners-react';
 import './Products.css';
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Products() {
       setTimeout(() => {
         let products = localStorage.getItem('products');
         if (products) products = JSON.parse(products);
-        setProducts(products);
+        setProducts(products || []);
       }, 3000);
 
       setIsLoading(false);
@@ -52,7 +52,7 @@ export default function Products() {
           </ListGroup.Item>
         </LinkContainer>
         {
-          isLoading || !products || !products.length ?
+          isLoading || !products ?
           <ListGroup.Item className="py-3 text-nowrap text-truncate loading-spinner">
             <SpinnerDiamond color="black" secondaryColor="gray"/>
           </ListGroup.Item>
